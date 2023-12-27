@@ -4,7 +4,7 @@ import asyncio
 
 class AbstractModel:
     @abc.abstractmethod
-    def compute(self):
+    async def compute(self):
         ...
 
 
@@ -20,3 +20,6 @@ class Handler:
         # отличается от времени исполнения нескольких таких корутин, запущенных конкурентно.
         #
         # YOU CODE GOES HERE
+        loop = asyncio.get_event_loop()
+        task = loop.run_in_executor(None, self._model.compute)
+        await task

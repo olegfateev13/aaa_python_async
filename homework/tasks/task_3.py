@@ -21,4 +21,11 @@ async def coroutines_execution_order(coros: list[Awaitable[Ticket]]) -> str:
     # Результат: 'мамамылараму'
     #
     # YOUR CODE GOES HERE
+    results = await asyncio.gather(*coros)
+    
+    # Сортируем результаты по полю number
+    sorted_results = sorted(results, key=lambda ticket: ticket.number)
+    
+    # Склеиваем поля key и возвращаем результат
+    return ''.join(ticket.key for ticket in sorted_results)
 
